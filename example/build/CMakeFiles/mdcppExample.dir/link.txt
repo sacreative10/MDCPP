@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/mdcppExample.dir/link.d CMakeFiles/mdcppExample.dir/main.cpp.o -o mdcppExample  -Wl,-rpath,/home/sohaibalam/projects/mdcpp/example/build/build build/libmdcpp.so build/external/glfw/src/libglfw3.a /usr/lib64/librt.a -lm -ldl build/external/glm/glm/libglm.a build/external/spdlog/libspdlog.a
