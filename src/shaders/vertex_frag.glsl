@@ -9,9 +9,9 @@ uniform vec3 uColor;
 
 void main() {
     if (uWireframe) {
-        FragColor = texture(uTexture, TexCoord);
-    } else {
         FragColor = vec4(uColor, 1.0);
+    } else {
+        FragColor = texture(uTexture, TexCoord);
     }
 }
 

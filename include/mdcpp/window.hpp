@@ -7,6 +7,12 @@
 #include <cstdint>
 #include <string>
 #include <queue>
+
+namespace mdcpp {
+	class Window;
+}
+
+
 namespace mdcpp
 {
 
@@ -26,6 +32,10 @@ public:
 
 	void draw(Drawable* drawable, bool useDefaultMVP = true, glm::mat4 mvpMatrix = glm::mat4(1.f));
 	void render();
+
+	static Window& getActiveWindow();
+	GLFWwindow* getWindow() const { return m_window; }
+	WindowParameters& getParams() { return m_params; }
 
 
 

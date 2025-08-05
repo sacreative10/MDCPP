@@ -29,10 +29,13 @@ include_directories(external/stb_image)
 set(SHADER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders)
 set(SHADER_OUTPUT_DIR ${CMAKE_BINARY_DIR}/shaders)
 
-file(MAKE_DIRECTORY ${SHADER_OUTPUT_DIR})
-file(COPY ${SHADER_SRC_DIR}/ DESTINATION ${SHADER_OUTPUT_DIR})
+# copy shaders
+file(COPY ${SHADER_SRC_DIR} DESTINATION ${SHADER_OUTPUT_DIR})
 
-add_library(mdcpp SHARED external/glad/src/glad.c)
+add_library(mdcpp SHARED external/glad/src/glad.c
+        include/mdcpp/input/input.h
+        include/mdcpp/input/keycodes.h
+        include/mdcpp/utils/definitions.h)
 add_subdirectory(src)
 
 target_include_directories(mdcpp PUBLIC include/)

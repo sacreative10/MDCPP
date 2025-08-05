@@ -25,7 +25,11 @@ public:
 		m_fill = fill;
 	}
 
-	Drawable() {}
+	Drawable() {
+		m_thickness = 1.f;
+		m_colour = glm::vec3(1.f);
+		m_fill = true;
+	}
 	Drawable(float thickness, glm::vec3 colour, bool fill) {
 		m_thickness = thickness;
 		m_colour = colour;

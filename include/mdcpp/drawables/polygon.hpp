@@ -12,8 +12,8 @@ public:
 	ConvexPolygon(std::vector<glm::vec2> vertices, float thickness = 2.f, glm::vec3 colour = glm::vec3(1.f), bool fill = false);
 
 	void draw() override;
+	void updateBuffer(const std::vector<glm::vec2>& vertices = std::vector<glm::vec2>());
 private:
-	void updateBuffer();
 	void setup() override;
 
 	std::vector<glm::vec2> m_vertices;
@@ -39,6 +39,7 @@ private:
 	float m_height;
 
 	ConvexPolygon* m_polygon = nullptr;
+	std::vector<glm::vec2> m_vertices;
 
 };
 };

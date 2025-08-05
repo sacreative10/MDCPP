@@ -9,11 +9,12 @@
 
 namespace mdcpp {
 
-Vertices::Vertices(std::vector<Vertex> vertices, RenderType renderType) : m_vertices(vertices), m_renderType(renderType) {
+Vertices::Vertices(std::vector<Vertex> vertices, RenderType renderType) : m_vertices(vertices), m_renderType(renderType)
+	,Drawable(){
 	setup();
 }
 
-Vertices::Vertices(std::vector<glm::vec3> vertices, RenderType renderType) :m_points(vertices), m_renderType(renderType) {
+Vertices::Vertices(std::vector<glm::vec3> vertices, RenderType renderType) :m_points(vertices), m_renderType(renderType), Drawable() {
 
 	for (const auto& v: m_points)
 	{
@@ -23,6 +24,17 @@ Vertices::Vertices(std::vector<glm::vec3> vertices, RenderType renderType) :m_po
 
 	setup();
 }
+
+Vertices::Vertices(std::vector<Triangle> triangles, RenderType renderType) : m_renderType(renderType), Drawable() {
+	for (const auto& t: triangles) {
+		m_vertices.emplace_back(t.a);
+		m_vertices.emplace_back(t.b);
+		m_vertices.emplace_back(t.c);
+	}
+
+	setup();
+}
+
 
 void Vertices::updateBuffer() 
 {
@@ -68,6 +80,8 @@ void Vertices::setup()
 
 void Vertices::draw() 
 {
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_DEPTH_BUFFER_BIT);
 	glUseProgram(m_shaderProgram);
 
 	glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram, "uMVP"), 1, GL_FALSE, glm::value_ptr(m_mvpMatrix));
@@ -76,6 +90,7 @@ void Vertices::draw()
 	if (m_renderType == RenderType::NO_FILL)
 	{
 		glUniform1i(glGetUniformLocation(m_shaderProgram, "uWireframe"), 1);
+		m_colour = glm::vec3(1.f, 1.f, 1.f);
 		glUniform3fv(glGetUniformLocation(m_shaderProgram, "uColor"), 1, glm::value_ptr(m_colour));
 
 		glLineWidth(m_thickness);
@@ -91,6 +106,8 @@ void Vertices::draw()
 	glUseProgram(0);
 	glBindVertexArray(0);
 	m_texture->unbind();
+	glDisable(GL_DEPTH_TEST);
+	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 

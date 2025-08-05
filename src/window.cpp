@@ -6,11 +6,18 @@
 #include <spdlog/spdlog.h>
 #include <mdcpp/utils/shaders.hpp>
 
+static mdcpp::Window* s_Instance = nullptr;
+
+
 namespace mdcpp {
+
+	Window &Window::getActiveWindow() {
+		return *s_Instance;
+	}
 
 Window::Window(WindowParameters params): m_params(params)
 {
-
+	init();
 }
 
 Window::Window(uint32_t width, uint32_t height)
@@ -76,7 +83,9 @@ void Window::init()
 	initQuad();
 
 	
-	m_mvpMatrix = glm::ortho(0.0f, (float)m_params.width, 0.0f, (float)m_params.height) * glm::translate(glm::mat4(1.f), glm::vec3(0.5 * m_params.width, 0.5 * m_params.height, 0.f));
+	m_mvpMatrix = glm::ortho(0.0f, (float)m_params.width, (float)m_params.height, 0.f) * glm::translate(glm::mat4(1.f), glm::vec3(0.5 * m_params.width, 0.5 * m_params.height, 0.f));
+
+	s_Instance = this;
 }
 
 
@@ -157,7 +166,7 @@ void Window::draw(Drawable* drawable, bool useDefaultMVP, glm::mat4 mvpMatrix)
 void Window::clear(glm::vec3 col)
 {
 	glClearColor(col.r, col.g, col.b, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Window::render()

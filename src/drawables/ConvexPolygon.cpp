@@ -36,8 +36,12 @@ void ConvexPolygon::setup()
 	m_shaderProgram = loadShader("shaders/line_vert.glsl", "shaders/line_frag.glsl");
 }
 
-void ConvexPolygon::updateBuffer()
+void ConvexPolygon::updateBuffer(const std::vector<glm::vec2>& vertices)
 {
+	if (vertices.size() > 0)
+	{
+		m_vertices = vertices;
+	}
 	size_t newCount = m_vertices.size();
 	if(newCount != m_indexCount)
 	{
@@ -86,13 +90,13 @@ void Quad::updateBuffer()
 	glm::vec2 v2 = glm::vec2(m_pos.x + m_width * 0.5f, m_pos.y + m_height * 0.5f);
 	glm::vec2 v3 = glm::vec2(m_pos.x - m_width * 0.5f, m_pos.y + m_height * 0.5f);
 
-	std::vector<glm::vec2> vertices = {v0, v1, v2, v3};
-	m_polygon = new ConvexPolygon(vertices, m_thickness, m_colour, m_fill);
+	m_vertices = {v0, v1, v2, v3};
 }
 
 void Quad::setup()
 {
 	updateBuffer();
+	m_polygon = new ConvexPolygon(m_vertices, m_thickness, m_colour, m_fill);
 }
 
 void Quad::draw()
@@ -103,6 +107,7 @@ void Quad::setPos(glm::vec2 pos)
 {
 	m_pos = pos;
 	updateBuffer();
+	m_polygon->updateBuffer(m_vertices);
 }
 
 };

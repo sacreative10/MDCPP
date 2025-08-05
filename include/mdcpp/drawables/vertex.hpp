@@ -1,17 +1,12 @@
 
 #include "mdcpp/texture.hpp"
 #include <mdcpp/drawables/drawables.hpp>
+#include <mdcpp/utils/definitions.h>
 
 
 
 namespace mdcpp {
 
-struct Vertex {
-	glm::vec3 position;
-	glm::vec2 uv;
-	Vertex(glm::vec3 position, glm::vec2 uv) : position(position), uv(uv) {}
-	Vertex(glm::vec3 pos) : position(pos) {}
-};
 
 enum class RenderType {
 	TEXTURE,
@@ -22,6 +17,7 @@ class Vertices: public Drawable {
 public:
 	Vertices(std::vector<Vertex> vertices, RenderType renderType = RenderType::NO_FILL);
 	Vertices(std::vector<glm::vec3> vertices, RenderType renderType = RenderType::NO_FILL);
+	Vertices(std::vector<Triangle> triangles, RenderType renderType = RenderType::NO_FILL);
 
 
 	void draw() override;

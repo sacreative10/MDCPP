@@ -11,4 +11,5 @@ target_sources(
 	drawables/ConvexPolygon.cpp
 	drawables/vertex.cpp
 	utils/shaders.cpp
+	input/input.cpp
 )
