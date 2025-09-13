@@ -5,6 +5,7 @@
 #include <mdcpp/drawables/line.hpp>
 #include <glm/ext.hpp>
 
+#include "mdcpp/drawables/circle.h"
 #include "mdcpp/input/input.h"
 
 
@@ -117,20 +118,17 @@ int main()
 	mdcpp::Texture texture;
 	texture.loadFromFile("assets/earthmap.jpg", true);
 
-
 	auto meshO = new  mdcpp::Vertices(mesh, mdcpp::RenderType::TEXTURE);
 	meshO->setTexture(&texture);
 
-
-
-
-
-
+	auto circle = new mdcpp::Circle(10, glm::vec2(0, 0));
 
 	while(!window.shouldClose())
 	{
 		mvp *= glm::rotate(glm::mat4(1.f), glm::radians(1.f), glm::vec3(0, 1, 0));
 		window.draw(square);
+		window.draw(circle);
+
 
 		square->setPos(mdcpp::Input::getMousePosition());
 		window.draw(meshO, false, mvp);

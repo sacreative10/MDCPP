@@ -12,6 +12,7 @@ class Texture {
 public:
 
 	Texture() = default;
+
 	~Texture();
 	bool loadFromFile(std::string path, bool flip = false);
 	void bind(GLenum texUnit = GL_TEXTURE0) const;

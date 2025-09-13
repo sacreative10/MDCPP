@@ -30,18 +30,22 @@ set(SHADER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders)
 set(SHADER_OUTPUT_DIR ${CMAKE_BINARY_DIR}/shaders)
 
 # copy shaders
-file(COPY ${SHADER_SRC_DIR} DESTINATION ${SHADER_OUTPUT_DIR})
 
 add_library(mdcpp SHARED external/glad/src/glad.c
         include/mdcpp/input/input.h
         include/mdcpp/input/keycodes.h
-        include/mdcpp/utils/definitions.h)
+        include/mdcpp/utils/definitions.h
+        include/mdcpp/drawables/circle.h
+        src/drawables/circle.cpp)
 add_subdirectory(src)
 
 target_include_directories(mdcpp PUBLIC include/)
 target_include_directories(mdcpp PUBLIC external/glad/include)
 target_link_libraries(mdcpp glfw glm spdlog::spdlog)
 
-# make compile_commands.json
+add_custom_target(copy_shaders
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${SHADER_OUTPUT_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${SHADER_SRC_DIR} ${SHADER_OUTPUT_DIR}
+)
 
-
+add_dependencies(mdcpp copy_shaders)
