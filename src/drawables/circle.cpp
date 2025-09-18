@@ -38,7 +38,8 @@ namespace mdcpp {
         glEnable(GL_POINT_SPRITE_COORD_ORIGIN);
         glUseProgram(m_shaderProgram);
 
-        m_mvpMatrix = glm::translate(glm::mat4(1.f), glm::vec3(m_pos, 0.f)) * glm::scale(glm::mat4(1.f), glm::vec3(m_radius, m_radius, 1.f)) * m_mvpMatrix;
+		m_mvpMatrix = m_mvpMatrix * glm::translate(glm::mat4(1.f), glm::vec3(m_pos, 0.f)) * glm::scale(glm::mat4(1.f), glm::vec3(m_radius, m_radius, 1.f));
+
 
         float relativeThickness = m_thickness / (2 *m_radius);
 

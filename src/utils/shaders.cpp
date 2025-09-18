@@ -29,7 +29,6 @@ std::string readFile(const std::string& path) {
 	if (!file)
 		throw std::runtime_error("Failed to open file: " + path);
 
-	spdlog::info("Reading file: {}", path);
 
 	std::stringstream buffer;
 	buffer << file.rdbuf();

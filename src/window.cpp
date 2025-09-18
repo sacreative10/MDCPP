@@ -152,7 +152,7 @@ bool Window::shouldClose()
 
 
 // hacky but it works
-void Window::draw(Drawable* drawable, bool useDefaultMVP, glm::mat4 mvpMatrix)
+void Window::draw(std::shared_ptr<Drawable> drawable, bool useDefaultMVP, glm::mat4 mvpMatrix)
 {
 	if(useDefaultMVP){
 		drawable->setMVPMatrix(m_mvpMatrix);
@@ -171,7 +171,7 @@ void Window::clear(glm::vec3 col)
 
 void Window::render()
 {
-	clear(glm::vec3(0.0f, 0.0f, 0.0f));
+	clear(m_clearColour);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
 	glViewport(0, 0, m_params.width, m_params.height);

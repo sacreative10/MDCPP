@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <cstdint>
 #include <string>
+#include <memory>
 #include <queue>
 
 namespace mdcpp {
@@ -30,12 +31,14 @@ public:
 
 	bool shouldClose();
 
-	void draw(Drawable* drawable, bool useDefaultMVP = true, glm::mat4 mvpMatrix = glm::mat4(1.f));
+	void draw(std::shared_ptr<Drawable> drawable, bool useDefaultMVP = true, glm::mat4 mvpMatrix = glm::mat4(1.f));
 	void render();
 
 	static Window& getActiveWindow();
 	GLFWwindow* getWindow() const { return m_window; }
 	WindowParameters& getParams() { return m_params; }
+
+	void setClearColour(glm::vec3 colour) { m_clearColour = colour; }
 
 
 
@@ -55,9 +58,11 @@ private:
 	GLuint m_quadVAO, m_quadVBO, m_quadEBO = 0;
 
 	GLuint m_shaderProgram = 0;
-	std::queue<Drawable*> m_drawables;
+	std::queue<std::shared_ptr<Drawable>> m_drawables;
 
 	glm::mat4 m_mvpMatrix;
+
+	glm::vec3 m_clearColour = glm::vec3(0.f);
 };
 
 
